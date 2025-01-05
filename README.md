@@ -1,5 +1,5 @@
 Hello,
-- Add private kets comma seperated in workers.js at line 8
+- Add private kets comma separated in workers.js at line 8
 - Change name at line 22
-- use command "bun run" to start the spammer
+- Use the command "bun run" to start the spammer
 - GMONAD
