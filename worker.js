@@ -2,7 +2,16 @@
 const {Web3} = require("web3");
 const abi = require("./abi.json");
 const { notEqual } = require("assert");
+const figlet = require('figlet');
+const gradient = require('gradient-string');
+
 const web3 = new Web3("https://devnet1.monad.xyz/rpc/8XQAiNSsPCrIdVttyeFLC6StgvRNTdf");
+
+text = figlet.textSync("SPAM-MONAD ", {
+  font: "ANSI Shadow",
+  horizontalLayout: "full",
+});
+console.log(gradient.pastel.multiline(text));
 
 const contractAddress = "0x1C45c4C63086866780761ABD511470027F203F3b";
 const senderPrivateKeys = [
@@ -12,10 +21,10 @@ const senderPrivateKeys = [
 ]; // Add more private keys as needed
 const contractAbi = abi;
 const contract = new web3.eth.Contract(contractAbi, contractAddress);
-
+let countTx=1;
 async function sendNativeTransaction(privateKey, nonce) {
   try {
-    console.log("Getting Gas PRice",await web3.eth.getGasPrice());
+    console.log("Total number of Tx sent: ",countTx++);
     // Extract the sender address from the private key
     const formattedPrivateKey = privateKey.startsWith("0x") ? privateKey : `0x${privateKey}`;
     const senderAddress = web3.eth.accounts.privateKeyToAccount(formattedPrivateKey).address;
@@ -31,7 +40,7 @@ async function sendNativeTransaction(privateKey, nonce) {
 
     const signedTx = await web3.eth.accounts.signTransaction(tx, formattedPrivateKey);
     await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-    console.log(`Worker [${senderAddress}] sent transaction with nonce: ${nonce}`);
+    console.log(`Worker [${senderAddress}]'s Transaction minted successfully!`);
   } catch (err) {
     console.error(`Worker [PrivateKey: ${privateKey}] failed: ${err.message}`);
     throw err; // Re-throw error for retry handling
@@ -47,7 +56,7 @@ const formattedPrivateKey = privateKey.startsWith("0x") ? privateKey : `0x${priv
 
     while (true) {
       try {
-        console.log(`Worker [${senderAddress}] sending transaction with nonce: ${nonce}`);
+        console.log(`Worker [${senderAddress}] sending transaction...`);
         await sendNativeTransaction(privateKey, nonce++);
       } catch (err) {
         console.error(`Worker [${senderAddress}] failed: ${err.message}. Retrying...`);

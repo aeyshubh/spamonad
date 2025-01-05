@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "start":"node script.js",
+    "start": "node worker.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -11,6 +11,8 @@
   "description": "",
   "dependencies": {
     "ethers": "^6.13.4",
+    "figlet": "^1.8.0",
+    "gradient-string": "^3.0.0",
     "web3": "^4.16.0"
   }
 }
